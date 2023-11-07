@@ -138,6 +138,16 @@ paths:
       tags:
         - Authors
       parameters:
+        - name: page 
+          in: path  
+          schema:
+            $ref: '#/components/schemas/Page'
+          required: true
+        - name: pagesize
+          in: path
+          schema:
+            $ref: '#/components/schemas/PageSize'
+          required: true
         - in: query
           name: name
           description: Name to filter authors

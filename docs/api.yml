@@ -47,7 +47,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Book'
-    put:
+    post:
       tags:
         - Books
       summary: Create or update a list of books
@@ -68,6 +68,27 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Book'
+    put:
+      tags:
+        - Books
+      summary: Create or update a list of books
+      operationId: crupdateBooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/crupdateBooks'
+      responses:
+        200:
+          description: The list of created or updated books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/crupdateBooks'
   /authors:
   #TODO2: complete GET (can be filtered by name) - PUT - DELETE
     get:
@@ -138,27 +159,14 @@ paths:
 components:
   schemas:
     Book:
-      
       type: object
       properties:
-        id:
-          type: string
-        bookName:
-          type: string
         author:
-          #TODO1: set it as a component with properties : id, name, sex (M or F)
-            $ref: '#/components/schemas/Author'
-        pageNumbers:
-          type: integer
-        topic:
-          type: string
-          enum:
-            - ROMANCE
-            - COMEDY
-            - OTHER
-        releaseDate:
-          type: string
-          format: date
+          $ref: '#/components/schemas/Author'
+      allOf:
+        - $ref: '#/components/schemas/crupdateBooks'
+     
+    
     Author:
       type: object
       properties:
@@ -173,3 +181,31 @@ components:
         enum:
             - M
             - F  
+    Topic:
+        type: string
+        enum:
+            - ROMANCE
+            - COMEDY
+            - OTHER
+    Page:
+      type: integer
+      description: Start at `1`
+    PageSize:
+      type: integer
+      description: Cannot exceed `500`
+    crupdateBooks: 
+      type: object
+      properties:
+        id:
+          type: string
+        bookName:
+          type: string
+        topic:
+            $ref: '#/components/schemas/Topic'
+        
+        pageNumbers:
+          $ref: '#/components/schemas/PageSize'
+        releaseDate:
+          type: string
+          format: date
+

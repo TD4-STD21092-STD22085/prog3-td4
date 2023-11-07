@@ -5,9 +5,14 @@ info:
   description: STD22001
 servers:
   - url: https://library.com
+tags:
+  - Books
+  - Authors 
 paths:
   /books:
     get:
+      tags:
+        - Books
       summary: Get all books
       description: The returned books are ordered by updated datetime.
       operationId: getBooks
@@ -43,6 +48,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/Book'
     put:
+      tags:
+        - Books
       summary: Create or update a list of books
       operationId: crupdateBooks
       requestBody:
@@ -67,6 +74,8 @@ paths:
       summary: Get author by name
       description:  Retrieve a list of authors, optionally filtered by name.
       operationId: getByAuthorName
+      tags:
+        - Authors
       parameters:
         - in: query
           name: name
@@ -84,6 +93,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/Author'
     put:
+      tags:
+          - Authors
       summary: Create or update a list of authors
       operationId: crupdateAuthors
       requestBody:
@@ -106,6 +117,8 @@ paths:
     delete:
       summary: Delete an author
       operationId: deleteAuthor
+      tags:
+          - Authors
       parameters:
         - name: aId
           in: path

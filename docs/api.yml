@@ -24,19 +24,19 @@ paths:
           schema:
             type: string
         - in: query
-          name: releaseDateInterval
-          description: Filter books by intervals of dates of the releaseDate
-          required: false
+          name: releaseDateMin
+          description: If 'releaseDateMax' is note provide,'releaseDateMin' is ignored 'releaseDateMax' can not be after 'releaseDateMin'
           schema:
-            type: object
-            properties:
-              from:
-                type: string
-                format: date
-                default: "2020-11-02"
-              to: 
-                type: string
-                format: date
+            type: string
+            format: date
+          required: false
+        - in: query
+          name: releaseDateMax
+          description: If 'releaseDateMin' is note provide,'releaseDateMax' is ignored 'releaseDateMin' can not be after 'releaseDateMax'
+          schema:
+            type: string
+            format: date
+          required: false
         #TODO3: add parameter to filter books by intervals of dates of the releaseDate
       responses:
         200:

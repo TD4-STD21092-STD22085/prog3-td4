@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.0.0
+  version: 1.1.0
   description: STD22001
 servers:
   - url: https://library.com
@@ -37,7 +37,7 @@ paths:
             type: string
             format: date
           required: false
-        #TODO3: add parameter to filter books by intervals of dates of the releaseDate
+    
       responses:
         200:
           description: The list of filtered books
@@ -47,7 +47,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Book'
-    post:
+    put:
       tags:
         - Books
       summary: Create or update a list of books
@@ -68,18 +68,27 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Book'
+
+  /books/{bookId}/authors/{authorId} :
     put:
       tags:
         - Books
-      summary: Create or update a list of books
-      operationId: crupdateBooks
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/crupdateBooks'
+      summary: create or update book
+      description: This operation create or update author of the book by specification id.
+      operationId: crupdateBookAuthor
+      parameters:
+        - in: query
+          name: bookId
+          description: Create books by given bookId
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: authorId
+          description: Create  books by given authorId
+          schema:
+            type: string
+          required: false
       responses:
         200:
           description: The list of created or updated books
@@ -88,10 +97,10 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/crupdateBooks'
+                  $ref: '#/components/schemas/CrupdateBooks'
+    
   /authors:
-  #TODO2: complete GET (can be filtered by name) - PUT - DELETE
-    get:
+     get:
       summary: Get author by name
       description:  Retrieve a list of authors, optionally filtered by name.
       operationId: getByAuthorName
@@ -113,7 +122,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Author'
-    put:
+     put:
       tags:
           - Authors
       summary: Create or update a list of authors
@@ -164,7 +173,7 @@ components:
         author:
           $ref: '#/components/schemas/Author'
       allOf:
-        - $ref: '#/components/schemas/crupdateBooks'
+        - $ref: '#/components/schemas/CrupdateBooks'
      
     
     Author:
@@ -193,7 +202,7 @@ components:
     PageSize:
       type: integer
       description: Cannot exceed `500`
-    crupdateBooks: 
+    CrupdateBooks: 
       type: object
       properties:
         id:
@@ -208,4 +217,4 @@ components:
         releaseDate:
           type: string
           format: date
-
+   

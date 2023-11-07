@@ -104,7 +104,14 @@ paths:
         - Books
       summary: Get book
       description: The returned books are ordered by updated datetime. 
-      
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/UpdateBooks'
       responses:
         200:
           description: The list of filtered books
@@ -238,5 +245,7 @@ components:
       properties:
         bookId:
           type: string
+          description: The ID of the book to update
         authorId: 
           type: string
+          description: The new author ID for the book

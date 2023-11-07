@@ -98,6 +98,22 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/CrupdateBooks'
+  /books/authors  :
+    put:
+      tags:
+        - Books
+      summary: Get book
+      description: The returned books are ordered by updated datetime. 
+      
+      responses:
+        200:
+          description: The list of filtered books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UpdateBooks'
     
   /authors:
      get:
@@ -217,4 +233,10 @@ components:
         releaseDate:
           type: string
           format: date
-   
+    UpdateBooks:
+      type: object
+      properties:
+        bookId:
+          type: string
+        authorId: 
+          type: string

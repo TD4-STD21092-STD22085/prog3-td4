@@ -18,6 +18,15 @@ paths:
       operationId: getBooks
       parameters:
         - in: query
+          name: page
+          schema:
+            $ref: '#/components/schemas/Page'
+        - in: query
+          name: pagesize
+          schema:
+            $ref: '#/components/schemas/PageSize'
+    
+        - in: query
           name: bookName
           description: Filter return books by given name
           required: false
@@ -37,7 +46,6 @@ paths:
             type: string
             format: date
           required: false
-    
       responses:
         200:
           description: The list of filtered books
@@ -222,9 +230,11 @@ components:
     Page:
       type: integer
       description: Start at `1`
+      default: 1
     PageSize:
       type: integer
       description: Cannot exceed `500`
+      default: 50
     CrupdateBooks: 
       type: object
       properties:

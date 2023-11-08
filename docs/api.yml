@@ -163,9 +163,12 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/CrupdateBooks'
+              oneOf:
+                - $ref: '#/components/schemas/ImportBook'
+                - $ref: '#/components/schemas/ImportAuthor'
+          application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+            schema:
+              type: string
       responses:
         '200':
           description: The list of created authors
@@ -191,9 +194,12 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/Author'
+              oneOf:
+                - $ref: '#/components/schemas/ImportAuthor'
+                - $ref: '#/components/schemas/ImportBook'
+          application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+            schema:
+              type: string
       responses:
         '200':
           description: The list of created authors
@@ -329,12 +335,6 @@ paths:
     
 components:
   responses:
-    '200':
-      description: successfully
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ResponseSuccefully'
     '400':
       description: Bad request
       content:
@@ -432,6 +432,29 @@ components:
       example:
         type: InternalServerException
         message: Unexpected error
+    ImportAuthor:
+        $ref: '#/components/schemas/Author'
+    ImportBook:
+        type: object
+        properties:
+          idAuthor:
+            type: integer
+          Book:
+            $ref: '#/components/schemas/Book'
+        
+        
+    OutputData:
+      type: object
+      properties:
+        message:
+          type: string
+    ImportChoice:
+      oneOf:
+        - $ref: '#/components/schemas/ImportAuthor'
+        - $ref: '#/components/schemas/ImportBook'
+      properties:
+        outputData:
+          $ref: '#/components/schemas/OutputData'
   parameters:
     QueryPagination:
       name: queryPagination

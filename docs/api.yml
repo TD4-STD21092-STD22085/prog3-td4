@@ -153,6 +153,35 @@ paths:
           $ref: '#/components/responses/403'
         '500':
           $ref: '#/components/responses/500'
+  /books/import:
+    post:
+      tags:
+          - Books
+      summary: Create  a list of books
+      operationId: createBooks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CrupdateBooks'
+      responses:
+        '200':
+          description: The list of created authors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CrupdateBooks'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+
   /authors:
      get:
       summary: Get author by name
@@ -307,8 +336,6 @@ components:
     Author:
       type: object
       properties:
-        id:
-          type: string
         name: 
           type: string
         sex:
@@ -327,8 +354,6 @@ components:
     CrupdateBooks: 
       type: object
       properties:
-        id:
-          type: string
         bookName:
           type: string
         topic:

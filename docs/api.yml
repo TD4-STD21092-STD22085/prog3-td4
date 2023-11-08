@@ -327,6 +327,40 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Author'
+  /visitor:
+    get:
+      tags:
+        - Visitor
+      summary: Get all visitors
+      description: The visitors are ordered by updated datetime.
+      operationId: getVisitor
+      parameters:
+        - in: query
+          name: page
+          schema:
+            $ref: '#/components/parameters/QueryPagination/schema/properties/page'
+        - in: query
+          name: pagesize
+          schema:
+            $ref: '#/components/parameters/QueryPagination/schema/properties/page_size'
+  
+      responses:
+        '200':
+          description: The list of filtered books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Visitor'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+  
+  
 
     
 components:
@@ -364,6 +398,15 @@ components:
           type: string
         sex:
          $ref: '#/components/schemas/Sex'
+    Visitor: 
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        reference:
+          type: string
     Sex:
         type: string
         enum:

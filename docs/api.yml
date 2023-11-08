@@ -6,8 +6,8 @@ info:
 servers:
   - url: https://library.com
 tags:
-  - Books
-  - Authors 
+  - name: Books
+  - name: Authors 
 paths:
   /books:
     get:
@@ -109,9 +109,9 @@ paths:
   /books/authors  :
     put:
       tags:
-        - Books
-      summary: Get book
-      description: The returned books are ordered by updated datetime. 
+        - Authors
+      summary: UpdateBookAuthor 
+      description: update book author. 
       requestBody:
         required: true
         content:
@@ -214,9 +214,7 @@ components:
         author:
           $ref: '#/components/schemas/Author'
       allOf:
-        - $ref: '#/components/schemas/CrupdateBooks'
-     
-    
+        - $ref: '#/components/schemas/CrupdateBooks' 
     Author:
       type: object
       properties:

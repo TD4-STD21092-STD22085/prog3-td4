@@ -359,7 +359,33 @@ paths:
           $ref: '#/components/responses/403'
         '500':
           $ref: '#/components/responses/500'
-  
+  /visitor/emprunts:
+    post:
+      tags:
+          - Visitor
+      summary: Create  a list of books
+      operationId: createBooks
+      parameters:
+        - $ref: '#/components/schemas/Emprunts'
+        
+        
+      responses:
+        '200':
+          description: The list of created authors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Emprunts'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+
+    
   
 
     
@@ -407,6 +433,17 @@ components:
           type: string
         reference:
           type: string
+    Emprunts:
+      type: object
+      properties:
+        idVisitor:
+          type: integer
+        idBook:
+          type: string
+        borrowing date:
+          type: string
+    emprunts:
+    
     Sex:
         type: string
         enum:

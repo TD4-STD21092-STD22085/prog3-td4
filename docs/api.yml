@@ -363,12 +363,13 @@ paths:
     post:
       tags:
           - Visitor
-      summary: Create  a list of books
-      operationId: createBooks
-      parameters:
-        - $ref: '#/components/schemas/Emprunts'
-        
-        
+      summary: Create  a list of borrowed book
+      operationId: create Boroowing
+      requestBody :
+        content:
+          application/json:
+            schema:  
+               $ref: '#/components/schemas/Emprunts'   
       responses:
         '200':
           description: The list of created authors
@@ -384,11 +385,34 @@ paths:
           $ref: '#/components/responses/403'
         '500':
           $ref: '#/components/responses/500'
-
-    
-  
-
-    
+  /return:
+    post:
+      tags:
+          - Visitor
+      summary: Create  a list of books
+      operationId: createBooks
+      requestBody :
+        content:
+          application/json:
+            schema:  
+               $ref: '#/components/schemas/Return' 
+        
+        
+      responses:
+        '200':
+          description: The list of created authors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Return'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
 components:
   responses:
     '400':
@@ -413,10 +437,13 @@ components:
     Book:
       type: object
       properties:
+        availability:
+          type: boolean
         author:
           $ref: '#/components/schemas/Author'
       allOf:
         - $ref: '#/components/schemas/CrupdateBooks' 
+      
     Author:
       type: object
       properties:
@@ -442,8 +469,15 @@ components:
           type: string
         borrowing date:
           type: string
-    emprunts:
-    
+          format: date
+    Return:
+      type: object
+      properties:
+        idEmprunt:
+          type: integer
+        return date:
+          type: string
+          format: date   
     Sex:
         type: string
         enum:

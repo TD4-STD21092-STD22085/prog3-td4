@@ -47,7 +47,7 @@ paths:
             format: date
           required: false
       responses:
-        200:
+        '200':
           description: The list of filtered books
           content:
             application/json:
@@ -55,6 +55,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Book'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
     put:
       tags:
         - Books
@@ -68,7 +74,7 @@ paths:
               items:
                 $ref: '#/components/schemas/Book'
       responses:
-        200:
+        '200':
           description: The list of created or updated books
           content:
             application/json:
@@ -76,6 +82,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Book'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
 
   /books/{bookId}/authors/{authorId} :
     put:
@@ -98,7 +110,7 @@ paths:
             type: string
           required: false
       responses:
-        200:
+        '200':
           description: The list of created or updated books
           content:
             application/json:
@@ -106,6 +118,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/CrupdateBooks'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
   /books/authors  :
     put:
       tags:
@@ -121,7 +139,7 @@ paths:
               items:
                 $ref: '#/components/schemas/UpdateBooks'
       responses:
-        200:
+        '200':
           description: The list of filtered books
           content:
             application/json:
@@ -129,7 +147,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/UpdateBooks'
-    
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
   /authors:
      get:
       summary: Get author by name
@@ -145,7 +168,7 @@ paths:
           schema:
             type: string
       responses:
-        200:
+        '200':
           description: The list of filtered books
           content:
             application/json:
@@ -153,6 +176,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Author'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
      put:
       tags:
           - Authors
@@ -166,7 +195,7 @@ paths:
               items:
                 $ref: '#/components/schemas/Author'
       responses:
-        200:
+        '200':
           description: The list of created or updated authors
           content:
             application/json:
@@ -174,6 +203,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Author'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
   /authors/page/{page}/pagesize/{pagesize}:
      get:
       summary: Get author by name
@@ -199,7 +234,7 @@ paths:
           schema:
             type: string
       responses:
-        200:
+        '200':
           description: The list of filtered books
           content:
             application/json:
@@ -207,6 +242,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Author'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
   /authors/{aId}: 
     delete:
       summary: Delete an author

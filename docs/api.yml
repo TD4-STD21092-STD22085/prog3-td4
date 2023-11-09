@@ -8,6 +8,8 @@ servers:
 tags:
   - name: Books
   - name: Authors 
+security:
+  - BearerAuth: [ ]
 paths:
   /books:
     get:
@@ -516,6 +518,15 @@ paths:
                 items:
                   $ref: '#/components/schemas/Emprunts'
 components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://example.com/oauth/authorize
+          scopes:
+            VISITEUR: Access as a visitor
+            ADMINISTRATEUR: Access as administrator
   responses:
     '400':
       description: Bad request

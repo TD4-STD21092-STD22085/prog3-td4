@@ -137,6 +137,8 @@ paths:
     put:
       tags:
         - Authors
+      security:
+        - OAuth2: ['ADMINISTRATOR']
       summary: UpdateBookAuthor 
       description: update book author. 
       requestBody:
@@ -199,6 +201,8 @@ paths:
           - Authors
       summary: Create  a list of author
       operationId: createAuthors
+      security:
+        - OAuth2: ['ADMINISTRATOR']
       requestBody:
         content:
           application/json:
@@ -228,6 +232,8 @@ paths:
       summary: Get author by name
       description:  Retrieve a list of authors, optionally filtered by name.
       operationId: getByAuthorName
+      security:
+        - OAuth2: ['VISITOR','ADMINISTRATOR']
       tags:
         - Authors
       parameters:
@@ -255,6 +261,8 @@ paths:
      put:
       tags:
           - Authors
+      security:
+        - OAuth2: ['ADMINISTRATOR']
       summary: Create or update a list of authors
       operationId: crupdateAuthors
       requestBody:
@@ -286,6 +294,8 @@ paths:
       operationId: getByAuthorName
       tags:
         - Authors
+      security:
+        - OAuth2: ['VISITOR','ADMINISTRATOR']
       parameters:
         - name: page 
           in: path  
@@ -324,6 +334,8 @@ paths:
       operationId: deleteAuthor
       tags:
           - Authors
+      security:
+        - OAuth2: ['ADMINISTRATOR']
       parameters:
         - name: aId
           in: path

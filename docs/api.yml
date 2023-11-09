@@ -514,6 +514,38 @@ paths:
           $ref: '#/components/responses/403'
         '500':
           $ref: '#/components/responses/500'
+  /visitors/{visitorId}/emprunts:
+    get:
+      summary: Obtenir la liste des emprunts et retours par un visiteur
+      description: Récupérez la liste des emprunts et retours effectués par un visiteur spécifique.
+      operationId: getEmpruntsAndReturnsByVisitor
+      tags:
+        - Visitors
+      parameters:
+        - in: path
+          name: visitorId
+          required: true
+          schema:
+            type: string
+          description: L'ID du visiteur
+        - in: query
+          name: page
+          schema:
+            $ref: '#/components/parameters/QueryPagination/schema/properties/page'
+        - in: query
+          name: pagesize
+          schema:
+            $ref: '#/components/parameters/QueryPagination/schema/properties/page_size'
+        
+      responses:
+        '200':
+          description: La liste des emprunts et retours par le visiteur récupérée avec succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Emprunt'
      
 components:
   responses:

@@ -8,6 +8,7 @@ servers:
 tags:
   - name: Books
   - name: Authors 
+  - name: Visitors
 paths:
   /books:
     get:
@@ -327,8 +328,90 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Author'
-
+  /visitor:
+     get:
+      summary: Get  all visitors 
+      description:  Retrieve a list of visitors optionally filtered by name.
+      operationId: getVisitors
+      tags:
+        - Visitors
+      parameters:
+        - in: query
+          name: page
+          schema:
+            $ref: '#/components/parameters/QueryPagination/schema/properties/page'
+        - in: query
+          name: pagesize
+          schema:
+            $ref: '#/components/parameters/QueryPagination/schema/properties/page_size'
     
+      responses:
+        '200':
+          description: The list of filtered books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Visitor'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+  /visitor/emprunts:
+     post:
+      tags:
+          - Visitors
+      summary: Create  a list of author
+      operationId: createAuthors
+      requestBody:
+        content:
+          application/json:
+            schema:
+               $ref: '#/components/schemas/Emprunt'
+      responses:
+        '200':
+          description: The list of created authors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Emprunt'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500' 
+  /visitor/return:
+     post:
+      tags:
+          - Visitors
+      summary: Create  a list of author
+      operationId: createAuthors
+      requestBody:
+        content:
+          application/json:
+            schema:
+               $ref: '#/components/schemas/Return'
+      responses:
+        '200':
+          description: The list of created authors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Return'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500' 
 components:
   responses:
     '400':
@@ -353,10 +436,13 @@ components:
     Book:
       type: object
       properties:
+        isBorrowed:
+          type: boolean
         author:
           $ref: '#/components/schemas/Author'
       allOf:
         - $ref: '#/components/schemas/CrupdateBooks' 
+      
     Author:
       type: object
       properties:
@@ -364,6 +450,36 @@ components:
           type: string
         sex:
          $ref: '#/components/schemas/Sex'
+    Visitor:
+      type: object
+      properties:
+        id: 
+          type: string
+        name:
+          type: string
+        reference:
+          type: string
+    Emprunt:
+      type: object
+      properties:
+        id:
+          type: string
+        idVisitor: 
+          type: string
+        idBook: 
+          type: string  
+        borrowing date: 
+          type: string
+          format: date
+    Return:
+      type: object
+      properties:
+        idEmprunt: 
+          type: string
+        return date: 
+          type: string
+          format: date
+    
     Sex:
         type: string
         enum:

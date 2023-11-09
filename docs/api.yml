@@ -327,8 +327,194 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Author'
-
-    
+  /visitor:
+    get:
+      tags:
+        - Visitor
+      summary: Get all visitors
+      description: The visitors are ordered by updated datetime.
+      operationId: getVisitor
+      parameters:
+        - in: query
+          name: page
+          schema:
+            $ref: '#/components/parameters/QueryPagination/schema/properties/page'
+        - in: query
+          name: pagesize
+          schema:
+            $ref: '#/components/parameters/QueryPagination/schema/properties/page_size'
+  
+      responses:
+        '200':
+          description: The list of filtered books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Visitor'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+  /visitor/emprunts:
+    post:
+      tags:
+          - Visitor
+      summary: Create  a list of borrowed book
+      operationId: create Boroowing
+      requestBody :
+        content:
+          application/json:
+            schema:  
+               $ref: '#/components/schemas/Emprunts'   
+      responses:
+        '200':
+          description: The list of the borrowed books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Emprunts'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+  /return:
+    post:
+      tags:
+          - Visitor
+      summary: Create  a list of books
+      operationId: createBooks
+      requestBody :
+        content:
+          application/json:
+            schema:  
+               $ref: '#/components/schemas/Return' 
+        
+        
+      responses:
+        '200':
+          description: The list of created authors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Return'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+  /emprunts: 
+    get:
+      summary: Get A Book borrowed
+      description:  Retrieve a list of borrowed book, optionally filtered by name.
+      operationId: getByBookName
+      tags:
+        - Books
+      parameters:
+        - name: page 
+          in: path  
+          schema:
+            $ref: '#/components/parameters/QueryPagination/schema/properties/page'
+          required: true
+        - name: pagesize
+          in: path
+          schema:
+            $ref: '#/components/parameters/QueryPagination/schema/properties/page_size'
+          required: true
+      responses:
+        '200':
+          description: The list of borrowed books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Emprunts'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+  /visitors/{visitorId}/emprunts:
+    get:
+      summary: Get all of borrowed and return books
+      description: Get all of borrowed and return books
+      operationId: getEmpruntsAndReturnsByVisitor
+      tags:
+        - Visitor
+      parameters:
+        - in: path
+          name: visitorId
+          required: true
+          schema:
+            type: string
+          description: the visitor ID
+        - in: query
+          name: page
+          schema:
+            $ref: '#/components/parameters/QueryPagination/schema/properties/page'
+        - in: query
+          name: pagesize
+          schema:
+            $ref: '#/components/parameters/QueryPagination/schema/properties/page_size'
+        
+      responses:
+        '200':
+          description: get successfully the borrowed books list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Emprunts'
+  /visitors/{visitorId}/activities:
+    get:
+      summary: Get the activity of a visitors
+      description: |
+        Get the activity of a visitors
+      operationId: getVisitorActivities
+      tags:
+        - Visitor
+      parameters:
+        - in: path
+          name: visitorId
+          required: true
+          schema:
+            type: string
+          description: the visitor ID
+        - in: query
+          name: startDate
+          schema:
+            type: string
+            format: date-time
+          description: start of the date (format ISO 8601)
+        - in: query
+          name: endDate
+          schema:
+            type: string
+            format: date-time
+          description: end of the date(format ISO 8601)
+        
+      responses:
+        '200':
+          description: Les activités du visiteur pendant la période récupérées avec succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Emprunts'
 components:
   responses:
     '400':
@@ -353,10 +539,13 @@ components:
     Book:
       type: object
       properties:
+        availability:
+          type: boolean
         author:
           $ref: '#/components/schemas/Author'
       allOf:
         - $ref: '#/components/schemas/CrupdateBooks' 
+      
     Author:
       type: object
       properties:
@@ -364,6 +553,34 @@ components:
           type: string
         sex:
          $ref: '#/components/schemas/Sex'
+    Visitor: 
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        reference:
+          type: string
+    Emprunts:
+      type: object
+      properties:
+        idVisitor:
+          type: integer
+        idBook:
+          type: string
+        borrowing date:
+          type: string
+          format: date
+    Return:
+      type: object
+      properties:
+        idEmprunt:
+          type: integer
+        return date:
+          type: string
+          format: date
+
     Sex:
         type: string
         enum:

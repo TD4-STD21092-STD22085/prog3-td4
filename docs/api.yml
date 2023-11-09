@@ -162,13 +162,11 @@ paths:
       requestBody:
         content:
           application/json:
-            schema:
-              oneOf:
-                - $ref: '#/components/schemas/ImportBook'
-                - $ref: '#/components/schemas/ImportAuthor'
+            schema:              
+                $ref: '#/components/schemas/ImportBookJson'
           application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
             schema:
-              type: string
+               $ref: '#/components/schemas/ImportBookExel'
       responses:
         '200':
           description: The list of created authors
@@ -194,12 +192,10 @@ paths:
         content:
           application/json:
             schema:
-              oneOf:
-                - $ref: '#/components/schemas/ImportAuthor'
-                - $ref: '#/components/schemas/ImportBook'
+               $ref: '#/components/schemas/ImportAuthorJson'
           application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
             schema:
-              type: string
+              $ref: '#/components/schemas/ImportAuthorExel'
       responses:
         '200':
           description: The list of created authors
@@ -433,16 +429,26 @@ components:
         type: InternalServerException
         message: Unexpected error
     ImportAuthor:
-        $ref: '#/components/schemas/Author'
+         oneOf: 
+          - $ref: '#/components/schemas/ImportAuthorExel'
+          - $ref: '#/components/schemas/ImportAuthorJson'
     ImportBook:
         type: object
         properties:
           idAuthor:
             type: integer
-          Book:
-            $ref: '#/components/schemas/Book'
-        
-        
+        oneOf: 
+          - $ref: '#/components/schemas/ImportBookExel'
+          - $ref: '#/components/schemas/ImportBookJson'
+    ImportBookExel:
+        $ref: '#/components/schemas/Book'
+    ImportBookJson:
+        $ref: '#/components/schemas/Book'
+    ImportAuthorExel:
+        $ref: '#/components/schemas/Author'
+    ImportAuthorJson:
+        $ref: '#/components/schemas/Author'
+    
     OutputData:
       type: object
       properties:

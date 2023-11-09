@@ -362,7 +362,7 @@ paths:
         '500':
           $ref: '#/components/responses/500'
   /visitor/emprunts:
-    post:
+    put:
       tags:
           - Visitor
       summary: Create  a list of borrowed book
@@ -371,7 +371,7 @@ paths:
         content:
           application/json:
             schema:  
-               $ref: '#/components/schemas/Emprunts'   
+               $ref: '#/components/schemas/EmpruntDetails'   
       responses:
         '200':
           description: The list of the borrowed books
@@ -381,34 +381,6 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Emprunts'
-        '400':
-          $ref: '#/components/responses/400'
-        '403':
-          $ref: '#/components/responses/403'
-        '500':
-          $ref: '#/components/responses/500'
-  /return:
-    post:
-      tags:
-          - Visitor
-      summary: Create  a list of books
-      operationId: createBooks
-      requestBody :
-        content:
-          application/json:
-            schema:  
-               $ref: '#/components/schemas/Return' 
-        
-        
-      responses:
-        '200':
-          description: The list of created authors
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Return'
         '400':
           $ref: '#/components/responses/400'
         '403':
@@ -544,6 +516,13 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/EmpruntDetails'
+              
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
   /visitors/{visitorId}/activities:
     get:
       summary: Get the activity of a visitors
@@ -662,6 +641,13 @@ components:
           type: boolean
       allOf:
         - $ref: '#/components/schemas/Emprunts'
+        - properties:
+            returnDate:
+              type: string
+              format: date
+          required:
+            - rendu
+            - returnDate
 
     Sex:
         type: string

@@ -415,6 +415,57 @@ paths:
           $ref: '#/components/responses/403'
         '500':
           $ref: '#/components/responses/500'
+  /book/disponible:
+    get:
+      summary: Get  list of book disponible 
+      description:  they return the list of books disponibles.
+      operationId: getBookDispo
+      tags:
+        - Books
+      parameters:
+        - in: query
+          name: page
+          schema:
+            $ref: '#/components/parameters/QueryPagination/schema/properties/page'
+        - in: query
+          name: pagesize
+          schema:
+            $ref: '#/components/parameters/QueryPagination/schema/properties/page_size'
+    
+      responses:
+        '200':
+          description: The list of filtered books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+              examples:
+                livresEmpruntesExemple:
+                  value:
+                  - bookName: "Livre Emprunté 1"
+                    topic: "ROMANCE"
+                    pageNumbers: "200"
+                    releaseDate: "2023-11-09"
+                    statut: "disponible"
+                    author:
+                      name: "Auteur 7"
+                      sex: "M"
+                  - bookName: "Livre Emprunté 2"
+                    topic: "FICTION"
+                    pageNumbers: "150"
+                    releaseDate: "2023-11-09"
+                    statut: "disponible"
+                    author:
+                      name: "Auteur 8"
+                      sex: "M"
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500' 
   /emprunts: 
     get:
       summary: Get A Book borrowed

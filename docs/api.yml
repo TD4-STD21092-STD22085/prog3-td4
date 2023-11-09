@@ -19,6 +19,8 @@ paths:
       summary: Get all books
       description: The returned books are ordered by updated datetime.
       operationId: getBooks
+      security:
+        - OAuth2: ['VISITOR','ADMINISTRATOR']
       parameters:
         - in: query
           name: page
@@ -69,6 +71,8 @@ paths:
         - Books
       summary: Create or update a list of books
       operationId: crupdateBooks
+      security:
+        - OAuth2: ['ADMINISTRATOR']
       requestBody:
         content:
           application/json:
@@ -99,6 +103,8 @@ paths:
       summary: create or update book
       description: This operation create or update author of the book by specification id.
       operationId: crupdateBookAuthor
+      security:
+        - OAuth2: ['ADMINISTRATOR']
       parameters:
         - in: query
           name: bookId
@@ -162,6 +168,8 @@ paths:
           - Books
       summary: Create  a list of books
       operationId: createBooks
+      security:
+        - OAuth2: ['ADMINISTRATOR']
       requestBody:
         content:
           application/json:
@@ -374,6 +382,8 @@ paths:
       summary: Get  list of book disponible 
       description:  they return the list of books disponibles.
       operationId: getBookDispo
+      security:
+        - OAuth2: ['VISITOR','ADMINISTRATOR']
       tags:
         - Books
       parameters:
@@ -422,9 +432,11 @@ paths:
           $ref: '#/components/responses/500' 
   /book/emprunts: 
     get:
-      summary: Get A Book borrowed
+      summary: Get all Book borrowed
       description:  Retrieve a list of borrowed book.
       operationId: getByBookName
+      security:
+        - OAuth2: ['VISITOR','ADMINISTRATOR']
       tags:
         - Books
       parameters:
@@ -550,8 +562,8 @@ components:
         implicit:
           authorizationUrl: https://example.com/oauth/authorize
           scopes:
-            VISITEUR: Access as a visitor
-            ADMINISTRATEUR: Access as administrator
+            VISITOR: Access as a visitor
+            ADMINISTRATOR: Access as administrator
   responses:
     '400':
       description: Bad request

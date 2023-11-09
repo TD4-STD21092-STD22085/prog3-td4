@@ -466,10 +466,10 @@ paths:
           $ref: '#/components/responses/403'
         '500':
           $ref: '#/components/responses/500' 
-  /emprunts: 
+  /book/emprunts: 
     get:
       summary: Get A Book borrowed
-      description:  Retrieve a list of borrowed book, optionally filtered by name.
+      description:  Retrieve a list of borrowed book.
       operationId: getByBookName
       tags:
         - Books
@@ -499,14 +499,27 @@ paths:
           $ref: '#/components/responses/403'
         '500':
           $ref: '#/components/responses/500'
-  /visitors/{visitorId}/emprunts:
+
+  /book/{bookId}/emprunts/{empruntsId}/visitor/{visitorId}:
     get:
-      summary: Get all of borrowed and return books
-      description: Get all of borrowed and return books
-      operationId: getEmpruntsAndReturnsByVisitor
+      summary: Get loan details for a specific visitor .
+      description: know which books were borrowed and returned by this visitor. .
+      operationId: getEmpruntDetailsForVisitor
       tags:
-        - Visitor
+        - Books
       parameters:
+        - in: path
+          name: bookId
+          required: true
+          schema:
+            type: string
+          description: the book ID
+        - in: path
+          name: empruntsId
+          required: true
+          schema:
+            type: string
+          description: the emprunts ID
         - in: path
           name: visitorId
           required: true
@@ -530,7 +543,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Emprunts'
+                  $ref: '#/components/schemas/EmpruntDetails'
   /visitors/{visitorId}/activities:
     get:
       summary: Get the activity of a visitors
@@ -628,7 +641,7 @@ components:
       type: object
       properties:
         idVisitor:
-          type: integer
+          type: string
         idBook:
           type: string
         borrowing date:
@@ -638,10 +651,17 @@ components:
       type: object
       properties:
         idEmprunt:
-          type: integer
+          type: string
         return date:
           type: string
           format: date
+    EmpruntDetails:
+      type: object
+      properties:
+        rendu:
+          type: boolean
+      allOf:
+        - $ref: '#/components/schemas/Emprunts'
 
     Sex:
         type: string

@@ -546,6 +546,44 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Emprunt'
+  /visitors/{visitorId}/activities:
+    get:
+      summary: Obtenir les activités d'un visiteur pendant une période donnée
+      description: |
+        Récupérez les emprunts et retours de livres effectués par un visiteur pendant une période spécifiée.
+      operationId: getVisitorActivities
+      tags:
+        - Visitors
+      parameters:
+        - in: path
+          name: visitorId
+          required: true
+          schema:
+            type: string
+          description: L'ID du visiteur
+        - in: query
+          name: startDate
+          schema:
+            type: string
+            format: date-time
+          description: La date de début de la période (format ISO 8601)
+        - in: query
+          name: endDate
+          schema:
+            type: string
+            format: date-time
+          description: La date de fin de la période (format ISO 8601)
+        
+      responses:
+        '200':
+          description: Les activités du visiteur pendant la période récupérées avec succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Emprunt'
+
      
 components:
   responses:

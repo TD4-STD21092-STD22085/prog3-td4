@@ -330,12 +330,25 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Author'
-  /visitor/emprunts:
+  /visitor{visitorId}/book/{bookId}/emprunts:
     put:
       tags:
           - Administrator
       summary: Crupdate a list of borrowed book
       operationId: create Boroowing
+      parameters:
+        - in: query
+          name: visitorId
+          description: crupdate the information of the visitor identified by {visitorId} with the data provided in the request body.
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: bookId
+          description: crupdate the details of the book identified by {bookId} using the information provided in the request body.
+          required: false
+          schema:
+            type: string
       requestBody :
         content:
           application/json:
@@ -349,7 +362,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Emprunts'
+                  $ref: '#/components/schemas/EmpruntDetails'
         '400':
           $ref: '#/components/responses/400'
         '403':
@@ -580,7 +593,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
         name:
           type: string
         reference:

@@ -1,13 +1,16 @@
 openapi: 3.0.3
 info:
   title: Library API
-  version: 1.2.0
+  version: 1.3.0
   description: STD22001
 servers:
   - url: https://library.com
 tags:
   - name: Books
   - name: Authors 
+  - name: Administrator
+security:
+  - BearerAuth: [ ]
 paths:
   /books:
     get:
@@ -16,6 +19,8 @@ paths:
       summary: Get all books
       description: The returned books are ordered by updated datetime.
       operationId: getBooks
+      security:
+        - OAuth2: ['VISITOR','ADMINISTRATOR']
       parameters:
         - in: query
           name: page
@@ -66,6 +71,8 @@ paths:
         - Books
       summary: Create or update a list of books
       operationId: crupdateBooks
+      security:
+        - OAuth2: ['ADMINISTRATOR']
       requestBody:
         content:
           application/json:
@@ -96,6 +103,8 @@ paths:
       summary: create or update book
       description: This operation create or update author of the book by specification id.
       operationId: crupdateBookAuthor
+      security:
+        - OAuth2: ['ADMINISTRATOR']
       parameters:
         - in: query
           name: bookId
@@ -128,6 +137,8 @@ paths:
     put:
       tags:
         - Authors
+      security:
+        - OAuth2: ['ADMINISTRATOR']
       summary: UpdateBookAuthor 
       description: update book author. 
       requestBody:
@@ -159,6 +170,8 @@ paths:
           - Books
       summary: Create  a list of books
       operationId: createBooks
+      security:
+        - OAuth2: ['ADMINISTRATOR']
       requestBody:
         content:
           application/json:
@@ -188,6 +201,8 @@ paths:
           - Authors
       summary: Create  a list of author
       operationId: createAuthors
+      security:
+        - OAuth2: ['ADMINISTRATOR']
       requestBody:
         content:
           application/json:
@@ -217,6 +232,8 @@ paths:
       summary: Get author by name
       description:  Retrieve a list of authors, optionally filtered by name.
       operationId: getByAuthorName
+      security:
+        - OAuth2: ['VISITOR','ADMINISTRATOR']
       tags:
         - Authors
       parameters:
@@ -244,6 +261,8 @@ paths:
      put:
       tags:
           - Authors
+      security:
+        - OAuth2: ['ADMINISTRATOR']
       summary: Create or update a list of authors
       operationId: crupdateAuthors
       requestBody:
@@ -275,6 +294,8 @@ paths:
       operationId: getByAuthorName
       tags:
         - Authors
+      security:
+        - OAuth2: ['VISITOR','ADMINISTRATOR']
       parameters:
         - name: page 
           in: path  
@@ -313,6 +334,8 @@ paths:
       operationId: deleteAuthor
       tags:
           - Authors
+      security:
+        - OAuth2: ['ADMINISTRATOR']
       parameters:
         - name: aId
           in: path
@@ -327,13 +350,54 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Author'
-  /visitor:
-    get:
+  /visitor{visitorId}/book/{bookId}/emprunts:
+    put:
       tags:
-        - Visitor
-      summary: Get all visitors
-      description: The visitors are ordered by updated datetime.
-      operationId: getVisitor
+          - Administrator
+      summary: Crupdate a list of borrowed book
+      operationId: create Boroowing
+      parameters:
+        - in: query
+          name: visitorId
+          description: crupdate the information of the visitor identified by {visitorId} with the data provided in the request body.
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: bookId
+          description: crupdate the details of the book identified by {bookId} using the information provided in the request body.
+          required: false
+          schema:
+            type: string
+      requestBody :
+        content:
+          application/json:
+            schema:  
+               $ref: '#/components/schemas/EmpruntDetails'   
+      responses:
+        '200':
+          description: The list of the borrowed books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmpruntDetails'
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
+  /book/disponible:
+    get:
+      summary: Get  list of book disponible 
+      description:  they return the list of books disponibles.
+      operationId: getBookDispo
+      security:
+        - OAuth2: ['VISITOR','ADMINISTRATOR']
+      tags:
+        - Books
       parameters:
         - in: query
           name: page
@@ -343,7 +407,7 @@ paths:
           name: pagesize
           schema:
             $ref: '#/components/parameters/QueryPagination/schema/properties/page_size'
-  
+    
       responses:
         '200':
           description: The list of filtered books
@@ -352,72 +416,39 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Visitor'
+                  $ref: '#/components/schemas/Book'
+              examples:
+                livresEmpruntesExemple:
+                  value:
+                  - bookName: "Livre Emprunté 1"
+                    topic: "ROMANCE"
+                    pageNumbers: "200"
+                    releaseDate: "2023-11-09"
+                    statut: "disponible"
+                    author:
+                      name: "Auteur 7"
+                      sex: "M"
+                  - bookName: "Livre Emprunté 2"
+                    topic: "FICTION"
+                    pageNumbers: "150"
+                    releaseDate: "2023-11-09"
+                    statut: "disponible"
+                    author:
+                      name: "Auteur 8"
+                      sex: "M"
         '400':
           $ref: '#/components/responses/400'
         '403':
           $ref: '#/components/responses/403'
         '500':
-          $ref: '#/components/responses/500'
-  /visitor/emprunts:
-    post:
-      tags:
-          - Visitor
-      summary: Create  a list of borrowed book
-      operationId: create Boroowing
-      requestBody :
-        content:
-          application/json:
-            schema:  
-               $ref: '#/components/schemas/Emprunts'   
-      responses:
-        '200':
-          description: The list of the borrowed books
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Emprunts'
-        '400':
-          $ref: '#/components/responses/400'
-        '403':
-          $ref: '#/components/responses/403'
-        '500':
-          $ref: '#/components/responses/500'
-  /return:
-    post:
-      tags:
-          - Visitor
-      summary: Create  a list of books
-      operationId: createBooks
-      requestBody :
-        content:
-          application/json:
-            schema:  
-               $ref: '#/components/schemas/Return' 
-        
-        
-      responses:
-        '200':
-          description: The list of created authors
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Return'
-        '400':
-          $ref: '#/components/responses/400'
-        '403':
-          $ref: '#/components/responses/403'
-        '500':
-          $ref: '#/components/responses/500'
-  /emprunts: 
+          $ref: '#/components/responses/500' 
+  /book/emprunts: 
     get:
-      summary: Get A Book borrowed
-      description:  Retrieve a list of borrowed book, optionally filtered by name.
+      summary: Get all Book borrowed
+      description:  Retrieve a list of borrowed book.
       operationId: getByBookName
+      security:
+        - OAuth2: ['VISITOR','ADMINISTRATOR']
       tags:
         - Books
       parameters:
@@ -446,14 +477,27 @@ paths:
           $ref: '#/components/responses/403'
         '500':
           $ref: '#/components/responses/500'
-  /visitors/{visitorId}/emprunts:
+
+  /book/{bookId}/emprunts/{empruntsId}/visitor/{visitorId}:
     get:
-      summary: Get all of borrowed and return books
-      description: Get all of borrowed and return books
-      operationId: getEmpruntsAndReturnsByVisitor
+      summary: Get loan details for a specific visitor .
+      description: know which books were borrowed and returned by this visitor. .
+      operationId: getEmpruntDetailsForVisitor
       tags:
-        - Visitor
+        - Administrator
       parameters:
+        - in: path
+          name: bookId
+          required: true
+          schema:
+            type: string
+          description: the book ID
+        - in: path
+          name: empruntsId
+          required: true
+          schema:
+            type: string
+          description: the emprunts ID
         - in: path
           name: visitorId
           required: true
@@ -477,7 +521,14 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Emprunts'
+                  $ref: '#/components/schemas/EmpruntDetails'
+              
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500'
   /visitors/{visitorId}/activities:
     get:
       summary: Get the activity of a visitors
@@ -485,7 +536,7 @@ paths:
         Get the activity of a visitors
       operationId: getVisitorActivities
       tags:
-        - Visitor
+        - Administrator
       parameters:
         - in: path
           name: visitorId
@@ -514,8 +565,17 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Emprunts'
+                  $ref: '#/components/schemas/EmpruntDetails'
 components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://example.com/oauth/authorize
+          scopes:
+            VISITOR: Access as a visitor
+            ADMINISTRATOR: Access as administrator
   responses:
     '400':
       description: Bad request
@@ -557,7 +617,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
         name:
           type: string
         reference:
@@ -566,7 +626,7 @@ components:
       type: object
       properties:
         idVisitor:
-          type: integer
+          type: string
         idBook:
           type: string
         borrowing date:
@@ -576,10 +636,24 @@ components:
       type: object
       properties:
         idEmprunt:
-          type: integer
+          type: string
         return date:
           type: string
           format: date
+    EmpruntDetails:
+      type: object
+      properties:
+        rendu:
+          type: boolean
+      allOf:
+        - $ref: '#/components/schemas/Emprunts'
+        - properties:
+            returnDate:
+              type: string
+              format: date
+          required:
+            - rendu
+            - returnDate
 
     Sex:
         type: string

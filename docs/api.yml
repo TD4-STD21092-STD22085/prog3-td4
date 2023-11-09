@@ -8,6 +8,8 @@ servers:
 tags:
   - name: Books
   - name: Authors 
+  - name: Administrator
+  - name: Visitor
 security:
   - BearerAuth: [ ]
 paths:
@@ -364,7 +366,7 @@ paths:
   /visitor/emprunts:
     put:
       tags:
-          - Visitor
+          - Administrator
       summary: Create  a list of borrowed book
       operationId: create Boroowing
       requestBody :
@@ -478,7 +480,7 @@ paths:
       description: know which books were borrowed and returned by this visitor. .
       operationId: getEmpruntDetailsForVisitor
       tags:
-        - Books
+        - Administrator
       parameters:
         - in: path
           name: bookId

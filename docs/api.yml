@@ -386,6 +386,108 @@ paths:
           $ref: '#/components/responses/403'
         '500':
           $ref: '#/components/responses/500' 
+  /book/emprunts:
+    get:
+      summary: Get  list of book emprunts 
+      description:  Retrieve a list of emprunts.
+      operationId: getVisitors
+      tags:
+        - Books
+      parameters:
+        - in: query
+          name: page
+          schema:
+            $ref: '#/components/parameters/QueryPagination/schema/properties/page'
+        - in: query
+          name: pagesize
+          schema:
+            $ref: '#/components/parameters/QueryPagination/schema/properties/page_size'
+        
+      responses:
+        '200':
+          description: The list of filtered books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+              examples:
+                livresEmpruntesExemple:
+                  value:
+                  - bookName: "Livre Emprunté 1"
+                    topic: "ROMANCE"
+                    pageNumbers: "200"
+                    releaseDate: "2023-11-09"
+                    statut: "emprunté"
+                    author:
+                      name: "Auteur 1"
+                      sex: "M"
+                  - bookName: "Livre Emprunté 2"
+                    topic: "FICTION"
+                    pageNumbers: "150"
+                    releaseDate: "2023-11-09"
+                    statut: "emprunté"
+                    author:
+                      name: "Auteur 2"
+                      sex: "F"
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500' 
+  /book/disponible:
+    get:
+      summary: Get  list of book dispo 
+      description:  Retrieve a list of emprunts.
+      operationId: getVisitors
+      tags:
+        - Books
+      parameters:
+        - in: query
+          name: page
+          schema:
+            $ref: '#/components/parameters/QueryPagination/schema/properties/page'
+        - in: query
+          name: pagesize
+          schema:
+            $ref: '#/components/parameters/QueryPagination/schema/properties/page_size'
+    
+      responses:
+        '200':
+          description: The list of filtered books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+              examples:
+                livresEmpruntesExemple:
+                  value:
+                  - bookName: "Livre Emprunté 1"
+                    topic: "ROMANCE"
+                    pageNumbers: "200"
+                    releaseDate: "2023-11-09"
+                    statut: "disponible"
+                    author:
+                      name: "Auteur 7"
+                      sex: "M"
+                  - bookName: "Livre Emprunté 2"
+                    topic: "FICTION"
+                    pageNumbers: "150"
+                    releaseDate: "2023-11-09"
+                    statut: "disponible"
+                    author:
+                      name: "Auteur 8"
+                      sex: "M"
+        '400':
+          $ref: '#/components/responses/400'
+        '403':
+          $ref: '#/components/responses/403'
+        '500':
+          $ref: '#/components/responses/500' 
   /visitor/return:
      post:
       tags:
@@ -411,7 +513,8 @@ paths:
         '403':
           $ref: '#/components/responses/403'
         '500':
-          $ref: '#/components/responses/500' 
+          $ref: '#/components/responses/500'
+     
 components:
   responses:
     '400':
@@ -436,8 +539,9 @@ components:
     Book:
       type: object
       properties:
-        isBorrowed:
-          type: boolean
+        statut:
+          type: string
+          enum: ["disponible", "emprunté"]
         author:
           $ref: '#/components/schemas/Author'
       allOf:

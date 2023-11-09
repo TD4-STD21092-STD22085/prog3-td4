@@ -354,6 +354,8 @@ paths:
     put:
       tags:
           - Administrator
+      security:
+        - OAuth2: ['VISITOR','ADMINISTRATOR']
       summary: Crupdate a list of borrowed book
       operationId: create Boroowing
       parameters:
@@ -485,6 +487,8 @@ paths:
       operationId: getEmpruntDetailsForVisitor
       tags:
         - Administrator
+      security:
+        - OAuth2: ['VISITOR','ADMINISTRATOR']
       parameters:
         - in: path
           name: bookId
@@ -537,6 +541,8 @@ paths:
       operationId: getVisitorActivities
       tags:
         - Administrator
+      security:
+        - OAuth2: ['VISITOR','ADMINISTRATOR']
       parameters:
         - in: path
           name: visitorId

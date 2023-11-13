@@ -52,20 +52,30 @@ paths:
             format: date
           required: false
       responses:
-        '200':
-          description: The list of filtered books
+        200:
+          description: List of Book
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Book'
-        '400':
-          $ref: '#/components/schemas/BadRequestException'
-        '403':
-          $ref: '#/components/schemas/NotAuthorizedException'
-        '500':
-          $ref: '#/components/schemas/InternalServerException'
+                $ref: '#/components/schemas/BookListBody'
+        400:
+          description: Bad request  
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+        403:
+          description: Forbidden  
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotAuthorizedException'
+        500:
+          description: Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
     put:
       tags:
         - Books
@@ -81,20 +91,30 @@ paths:
               items:
                 $ref: '#/components/schemas/Book'
       responses:
-        '200':
-          description: The list of created or updated books
+        200:
+          description: List of Book
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Book'
-        '400':
-          $ref: '#/components/schemas/BadRequestException'
-        '403':
-          $ref: '#/components/schemas/NotAuthorizedException'
-        '500':
-          $ref: '#/components/schemas/InternalServerException'
+                $ref: '#/components/schemas/BookListBody'
+        400:
+          description: Bad request  
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+        403:
+          description: Forbidden  
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotAuthorizedException'
+        500:
+          description: Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
 
   /books/{bookId}/authors/{authorId} :
     put:
@@ -119,20 +139,30 @@ paths:
             type: string
           required: false
       responses:
-        '200':
-          description: The list of created or updated books
+        200:
+          description: List of Book
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/CrupdateBooks'
-        '400':
-          $ref: '#/components/schemas/BadRequestException'
-        '403':
-          $ref: '#/components/schemas/NotAuthorizedException'
-        '500':
-          $ref: '#/components/schemas/InternalServerException'
+                $ref: '#/components/schemas/BookListBody'
+        400:
+          description: Bad request  
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestException'
+        403:
+          description: Forbidden  
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotAuthorizedException'
+        500:
+          description: Internal Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerException'
   /books/authors  :
     put:
       tags:
@@ -681,6 +711,14 @@ components:
           code: 200
         message: ok
         body: {}
+    BookListBody:
+       allOf:
+        - $ref: '#/components/schemas/ResponseTemplate'
+        - properties:
+            body: 
+              type: array
+              items:
+                 $ref: '#/components/schemas/Book'
     BadRequestException:
       allOf:
         - $ref: '#/components/schemas/ResponseTemplate'

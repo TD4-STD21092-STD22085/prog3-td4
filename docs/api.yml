@@ -401,14 +401,7 @@ paths:
       tags:
         - Books
       parameters:
-        - in: query
-          name: page
-          schema:
-            $ref: '#/components/parameters/QueryPagination/schema/properties/page'
-        - in: query
-          name: pagesize
-          schema:
-            $ref: '#/components/parameters/QueryPagination/schema/properties/page_size'
+        - $ref: '#/components/parameters/QueryPagination'
     
       responses:
         '200':
@@ -454,16 +447,8 @@ paths:
       tags:
         - Books
       parameters:
-        - name: page 
-          in: path  
-          schema:
-            $ref: '#/components/parameters/QueryPagination/schema/properties/page'
-          required: true
-        - name: pagesize
-          in: path
-          schema:
-            $ref: '#/components/parameters/QueryPagination/schema/properties/page_size'
-          required: true
+        - $ref: '#/components/parameters/QueryPagination/schema/properties/page'
+          
       responses:
         '200':
           description: The list of borrowed books
@@ -660,6 +645,19 @@ components:
           required:
             - rendu
             - returnDate
+    ResponseTemplate:
+      type: object
+      properties:
+          status:
+            type: object
+            properties:
+              code:
+                type: integer
+              message:
+                type: string
+          body: 
+            type: object
+
 
     Sex:
         type: string

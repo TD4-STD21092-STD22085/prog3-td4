@@ -651,7 +651,7 @@ components:
       type: object
       properties:
         availability:
-          type: boolean
+          $ref: '#/components/schemas/Availability'
         author:
           $ref: '#/components/schemas/Author'
       allOf:
@@ -734,8 +734,6 @@ components:
         releaseDate:
           type: string
           format: date
-        availability:
-          $ref: '#/components/schemas/Availability'
     UpdateBooks:
       type: object
       properties:

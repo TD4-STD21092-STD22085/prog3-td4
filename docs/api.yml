@@ -61,11 +61,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/Book'
         '400':
-          $ref: '#/components/responses/400'
+          $ref: '#/components/schemas/BadRequestException'
         '403':
-          $ref: '#/components/responses/403'
+          $ref: '#/components/schemas/NotAuthorizedException'
         '500':
-          $ref: '#/components/responses/500'
+          $ref: '#/components/schemas/InternalServerException'
     put:
       tags:
         - Books
@@ -90,11 +90,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/Book'
         '400':
-          $ref: '#/components/responses/400'
+          $ref: '#/components/schemas/BadRequestException'
         '403':
-          $ref: '#/components/responses/403'
+          $ref: '#/components/schemas/NotAuthorizedException'
         '500':
-          $ref: '#/components/responses/500'
+          $ref: '#/components/schemas/InternalServerException'
 
   /books/{bookId}/authors/{authorId} :
     put:
@@ -128,11 +128,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/CrupdateBooks'
         '400':
-          $ref: '#/components/responses/400'
+          $ref: '#/components/schemas/BadRequestException'
         '403':
-          $ref: '#/components/responses/403'
+          $ref: '#/components/schemas/NotAuthorizedException'
         '500':
-          $ref: '#/components/responses/500'
+          $ref: '#/components/schemas/InternalServerException'
   /books/authors  :
     put:
       tags:
@@ -159,11 +159,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/UpdateBooks'
         '400':
-          $ref: '#/components/responses/400'
+          $ref: '#/components/schemas/BadRequestException'
         '403':
-          $ref: '#/components/responses/403'
+          $ref: '#/components/schemas/NotAuthorizedException'
         '500':
-          $ref: '#/components/responses/500'
+          $ref: '#/components/schemas/InternalServerException'
   /books/import:
     post:
       tags:
@@ -190,11 +190,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/CrupdateBooks'
         '400':
-          $ref: '#/components/responses/400'
+          $ref: '#/components/schemas/BadRequestException'
         '403':
-          $ref: '#/components/responses/403'
+          $ref: '#/components/schemas/NotAuthorizedException'
         '500':
-          $ref: '#/components/responses/500'
+          $ref: '#/components/schemas/InternalServerException'
   /authors/import:
     post:
       tags:
@@ -221,11 +221,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/Author'
         '400':
-          $ref: '#/components/responses/400'
+          $ref: '#/components/schemas/BadRequestException'
         '403':
-          $ref: '#/components/responses/403'
+          $ref: '#/components/schemas/NotAuthorizedException'
         '500':
-          $ref: '#/components/responses/500'
+          $ref: '#/components/schemas/InternalServerException'
 
   /authors:
      get:
@@ -253,11 +253,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/Author'
         '400':
-          $ref: '#/components/responses/400'
+          $ref: '#/components/schemas/BadRequestException'
         '403':
-          $ref: '#/components/responses/403'
+          $ref: '#/components/schemas/NotAuthorizedException'
         '500':
-          $ref: '#/components/responses/500'
+          $ref: '#/components/schemas/InternalServerException'
      put:
       tags:
           - Authors
@@ -282,11 +282,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/Author'
         '400':
-          $ref: '#/components/responses/400'
+          $ref: '#/components/schemas/BadRequestException'
         '403':
-          $ref: '#/components/responses/403'
+          $ref: '#/components/schemas/NotAuthorizedException'
         '500':
-          $ref: '#/components/responses/500'
+          $ref: '#/components/schemas/InternalServerException'
   /authors/page/{page}/pagesize/{pagesize}:
      get:
       summary: Get author by name
@@ -323,11 +323,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/Author'
         '400':
-          $ref: '#/components/responses/400'
+          $ref: '#/components/schemas/BadRequestException'
         '403':
-          $ref: '#/components/responses/403'
+          $ref: '#/components/schemas/NotAuthorizedException'
         '500':
-          $ref: '#/components/responses/500'
+          $ref: '#/components/schemas/InternalServerException'
   /authors/{aId}: 
     delete:
       summary: Delete an author
@@ -386,11 +386,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/EmpruntDetails'
         '400':
-          $ref: '#/components/responses/400'
+          $ref: '#/components/schemas/BadRequestException'
         '403':
-          $ref: '#/components/responses/403'
+          $ref: '#/components/schemas/NotAuthorizedException'
         '500':
-          $ref: '#/components/responses/500'
+          $ref: '#/components/schemas/InternalServerException'
   /book/disponible:
     get:
       summary: Get  list of book disponible 
@@ -432,11 +432,11 @@ paths:
                       name: "Auteur 8"
                       sex: "M"
         '400':
-          $ref: '#/components/responses/400'
+          $ref: '#/components/schemas/BadRequestException'
         '403':
-          $ref: '#/components/responses/403'
+          $ref: '#/components/schemas/NotAuthorizedException'
         '500':
-          $ref: '#/components/responses/500' 
+          $ref: '#/components/schemas/InternalServerException' 
   /book/emprunts: 
     get:
       summary: Get all Book borrowed
@@ -459,11 +459,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/Emprunts'
         '400':
-          $ref: '#/components/responses/400'
+          $ref: '#/components/schemas/BadRequestException'
         '403':
-          $ref: '#/components/responses/403'
+          $ref: '#/components/schemas/NotAuthorizedException'
         '500':
-          $ref: '#/components/responses/500'
+          $ref: '#/components/schemas/InternalServerException'
 
   /book/{bookId}/emprunts/{empruntsId}/visitor/{visitorId}:
     get:
@@ -513,11 +513,11 @@ paths:
                   $ref: '#/components/schemas/EmpruntDetails'
               
         '400':
-          $ref: '#/components/responses/400'
+          $ref: '#/components/schemas/BadRequestException'
         '403':
-          $ref: '#/components/responses/403'
+          $ref: '#/components/schemas/NotAuthorizedException'
         '500':
-          $ref: '#/components/responses/500'
+          $ref: '#/components/schemas/InternalServerException'
   /visitors/{visitorId}/activities:
     get:
       summary: Get the activity of a visitors
@@ -567,25 +567,6 @@ components:
           scopes:
             VISITOR: Access as a visitor
             ADMINISTRATOR: Access as administrator
-  responses:
-    '400':
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BadRequestException'
-    '403':
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/NotAuthorizedException'
-    '500':
-      description: Internal server error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/InternalServerException'
   schemas:
     Book:
       type: object
@@ -645,20 +626,6 @@ components:
           required:
             - rendu
             - returnDate
-    ResponseTemplate:
-      type: object
-      properties:
-          status:
-            type: object
-            properties:
-              code:
-                type: integer
-              message:
-                type: string
-          body: 
-            type: object
-
-
     Sex:
         type: string
         enum:
@@ -692,37 +659,52 @@ components:
         authorId: 
           type: string
           description: The new author ID for the book
-    Exception:
+    Status:
       type: object
       properties:
-        type:
-          type: string
+        code:
+          type: integer
         message:
           type: string
-    ResponseSuccefully:
+    ResponseTemplate:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/Status'
+        body: 
+            type: object
+    Successfully:
       allOf:
-        - $ref: '#/components/schemas/Exception'
+        - $ref: '#/components/schemas/ResponseTemplate'
       example:
-        type: ResponseSuccefully
-        message: Response  successfully
+        status:
+          code: 200
+        message: ok
+        body: {}
     BadRequestException:
       allOf:
-        - $ref: '#/components/schemas/Exception'
+        - $ref: '#/components/schemas/ResponseTemplate'
       example:
-        type: BadRequestException
-        message: Bad request
+        status:
+          code: 400
+        message: bad request
+        body: ''
     NotAuthorizedException:
       allOf:
-        - $ref: '#/components/schemas/Exception'
+        - $ref: '#/components/schemas/ResponseTemplate'
       example:
-        type: NotAuthorizedException
+        status:
+          code: 403
         message: Not authorized
+        body:
     InternalServerException:
       allOf:
-        - $ref: '#/components/schemas/Exception'
+        - $ref: '#/components/schemas/ResponseTemplate'
       example:
-        type: InternalServerException
-        message: Unexpected error
+        status:
+          code: 500
+        message: InternalServerException
+        body:
     ImportAuthor:
          oneOf: 
           - $ref: '#/components/schemas/ImportAuthorExel'

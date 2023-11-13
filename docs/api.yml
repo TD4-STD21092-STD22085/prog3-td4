@@ -8,7 +8,7 @@ servers:
 tags:
   - name: Books
   - name: Authors 
-  - name: Administrator
+  - name: VISITOR
 security:
   - BearerAuth: [ ]
 paths:
@@ -728,6 +728,11 @@ components:
           required:
             - rendu
             - returnDate
+    Availability:
+                type: string
+                enum:
+                    - Disponible
+                    - Borowed 
     Sex:
         type: string
         enum:
@@ -752,6 +757,8 @@ components:
         releaseDate:
           type: string
           format: date
+        availability:
+          $ref: '#/components/schemas/Availability'
     UpdateBooks:
       type: object
       properties:
